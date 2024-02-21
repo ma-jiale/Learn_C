@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     size_t count = 0;
     double sum = 0;
     double average = 0;
-
+/*打开文件，或使用标准输入*/
     if(argc != 2)
     {
         puts("use stdin");
@@ -19,12 +19,10 @@ int main(int argc, char* argv[])
         puts("can't open the file.");
         exit(EXIT_FAILURE);
     }
-
-    count = fread(num, sizeof(double), SIZE, fp);
-
+    count = fread(num, sizeof(double), SIZE, fp);//读入double类型数据储存到num数组中
     if(fclose(fp) != 0)
         exit(EXIT_FAILURE);
-
+/*计算算数平均数*/
     for (int i = 0; i < SIZE; i++)
     {
         sum += num[i];

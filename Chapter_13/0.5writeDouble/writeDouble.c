@@ -10,7 +10,7 @@ int main()
 
     if((fp = fopen(name, "w")) == NULL)
         exit(EXIT_FAILURE);    
-
+/*向fp指定的文件中写入double类型的数字*/
     fwrite(num, sizeof(double), SIZE, fp);
     
     if(fclose(fp) != 0)
