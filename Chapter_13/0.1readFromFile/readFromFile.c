@@ -3,26 +3,21 @@
 #include<string.h>
 #define SIZE 40
 
+FILE* open_file(char* name, char* mode);
+
 int main(int argc, char* argv[])
 {
     int ch;//use int to save EOF
     char name[40];
     FILE* in, *out;
 
-    if((in = fopen(argv[1], "r")) == NULL)
-    {
-        printf("Can't open the file\n");
-        exit(EXIT_FAILURE);
-    }
+    in = open_file(argv[1], "r");
 
     strncpy(name, argv[1], SIZE-6);
     name[SIZE - 6] = '\0';
     strcat(name, "_copy");
-    if((out = fopen(name, "w")) == NULL)
-    {
-        printf("Can't create the file\n");
-        exit(EXIT_FAILURE);
-    }
+    
+    out = open_file(name, "w");
 
     while((ch = getc(in)) != EOF)
     {
@@ -32,4 +27,15 @@ int main(int argc, char* argv[])
     if(fclose(in) != 0 && fclose(out) != 0)
         printf("Error in closing file\n");
     return 0;
+}
+
+FILE* open_file(char* name, char* mode)
+{
+    FILE* fp;
+    if((fp = fopen(name, mode)) == NULL)
+    {
+        printf("Can't open the file\n");
+        exit(EXIT_FAILURE);
+    }
+    return fp;
 }
