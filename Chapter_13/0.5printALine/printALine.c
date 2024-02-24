@@ -1,18 +1,18 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define BUF 256
+
 int have_char(char ch, const char* line ,int size);
 int main(int argc, char* argv[])
 {
     char ch;
     FILE* fp;
-    long last;
     char line[BUF];
 
     if((fp = fopen(argv[2], "r")) == NULL)
         {
-        puts("can't open the file.");
-        exit(EXIT_FAILURE);
+            puts("Can't open the file.");
+            exit(EXIT_FAILURE);
         }
 
     while (fgets(line, BUF, fp) != NULL)
