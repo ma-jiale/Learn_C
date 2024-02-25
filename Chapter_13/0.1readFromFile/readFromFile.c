@@ -34,7 +34,7 @@ FILE* open_file(char* name, char* mode)
     FILE* fp;
     if((fp = fopen(name, mode)) == NULL)
     {
-        printf("Can't open the file\n");
+        printf("Can't open %s\n", name);
         exit(EXIT_FAILURE);
     }
     return fp;
