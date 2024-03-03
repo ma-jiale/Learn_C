@@ -42,7 +42,7 @@ int main(void)
         for (index = 0; index < count; index++)
             printf("%s by %s: $%.2f\n", library[index].title,
                    library[index].author, library[index].value);
-        
+        /*按照图书价格顺序输出图书信息*/
         struct book *temp;
         int top, seek;
         for (top = 0; top < count - 1; top++)
