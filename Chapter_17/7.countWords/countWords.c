@@ -2,20 +2,24 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "tree.h"
+
 void showMenu();
 char getChoice();
 char getFirst();
 char *getWordInFile(char *ps, FILE *fp);
-void showItem(Item item);
+void printItem(Item item);
 void findWord(const Tree *ptree);
+void showWords(const Tree *ptree);
+
 int main()
 {
 	Tree words;
-	InitializeTree(&words);
 	FILE *fp;
 	Item temp;
 	temp.num = 1;
 	char choice;
+
+	InitializeTree(&words);
 	if ((fp = fopen("song.txt", "r")) == NULL)
 	{
 		puts("Can't open the file.");
@@ -28,11 +32,9 @@ int main()
 		switch (choice)
 		{
 		case 'a':
-		case 'A':
-			Traverse(&words, showItem);
+			showWords(&words);
 			break;
 		case 'b':
-		case 'B':
 			findWord(&words);
 			break;
 		default:
@@ -40,6 +42,7 @@ int main()
 			break;
 		}
 	}
+	fclose(fp);
 	puts("Bye!");
 	return 0;
 }
@@ -64,7 +67,8 @@ void showMenu()
 		putchar('*');
 	}
 	putchar('\n');
-	printf("Enter the number corresponding to the action:\n");
+	puts("Word counting program");
+	puts("Enter the letter corresponding to your choice:");
 	printf("a) show all words     b) look a word\n");
 	printf("q) quit\n");
 	for (int i = 0; i < 70; i++)
@@ -80,24 +84,32 @@ char getFirst()
 	ch = getchar();
 	while (getchar() != '\n') /* skip over newlines */
 		continue;
+	ch = tolower(ch);
 	return ch;
 }
 
-void showItem(Item item)
+void showWords(const Tree *ptree)
+{
+	if (TreeIsEmpty(ptree))
+		puts("No entries!");
+	else
+		Traverse(ptree, printItem);
+}
+
+void printItem(Item item)
 {
 	printf("%s  %d times\n", item.word, item.num);
 }
 
 void findWord(const Tree *ptree)
-{	
+{
 	Item temp;
 	puts("please enter the word you what to find in this file");
 	scanf("%s", temp.word);
-	if(InTree(&temp, ptree))
-		printf("%s is found in this text %d times\n",temp.word,temp.num);
+	if (InTree(&temp, ptree))
+		printf("%s appears in this text %d times\n", temp.word, temp.num);
 	else
-		printf("Can't find %s in this text\n",temp.word);
-	
+		printf("Can't find %s in this text\n", temp.word);
 }
 
 char *getWordInFile(char *ps, FILE *fp)
